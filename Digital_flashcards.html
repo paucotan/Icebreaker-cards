@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Icebreaker Flashcards App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Ubuntu', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .card {
+            width: 80%;
+            max-width: 600px;
+            aspect-ratio: 3/2;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #skip {
+            background-color: #f44336;
+        }
+        #skip:hover {
+            background-color: #da190b;
+        }
+        #counter {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="card" id="question-card">
+        Click "Pick Card" to start!
+    </div>
+    <div class="buttons">
+        <button id="pick">Pick Card</button>
+        <button id="skip">Skip</button>
+    </div>
+    <div id="counter">0/30</div>
+
+    <script>
+        const questions = [
+            "What's your favorite way to relax after a busy day?",
+    "If you could have any superpower, what would it be and why?",
+    "What's the most interesting thing you've learned in the past week?",
+    "Which fictional character do you identify with the most and why?",
+    "What's your go-to productivity hack?",
+    "If you could time travel, would you visit the past or the future, and why?",
+    "If you had to choose a personal theme song, what would it be and why?",
+    "What's your favorite hobby outside of work?",
+    "If you could have dinner with any historical figure, who would it be and why?",
+    "What's your favorite way to stay informed on industry news and trends?",
+    "If you could live in any fictional world, where would you choose to reside?",
+    "What's the most interesting place you've ever visited?",
+    "What's your personal mantra or life philosophy?",
+    "What's the most important lesson you've learned from a failure or setback?",
+    "If you could give your younger self one piece of advice, what would it be?",
+    "What's the best advice you've ever received, and why has it stuck with you?",
+    "If you had unlimited resources and influence, what problem in the world would you try to solve first?",
+    "What personal qualities do you think are most important for success, and why?",
+    "If you could swap places with anyone for a day, who would it be and what would you hope to learn?",
+    "What's a skill or ability you wish you had, and why?",
+    "What's the most significant challenge you've overcome in your career, and what did you learn from it?",
+    "If you could master any skill instantly, what would it be and why?",
+    "What's your favorite quote, and how does it resonate with you?",
+    "If you could host a dinner party with any three people, living or dead, who would you invite and why?",
+    "What's the most unusual thing you've ever eaten, and would you eat it again?",
+    "What's your ideal work environment, and why?",
+    "What's a cause or charity you're passionate about, and how did you get involved?",
+    "If you could start your career over again, what would you do differently?",
+    "What's a hidden talent or skill you possess that most people don't know about?",
+    "What was your favorite thing about your onboarding experience?"
+        ];
+
+        let remainingQuestions = [...questions];
+        let pickedCount = 0;
+
+        const card = document.getElementById('question-card');
+        const pickButton = document.getElementById('pick');
+        const skipButton = document.getElementById('skip');
+        const counter = document.getElementById('counter');
+
+        function updateCounter() {
+            counter.textContent = `${pickedCount}/${questions.length}`;
+        }
+
+        function pickQuestion() {
+            if (remainingQuestions.length === 0) {
+                card.textContent = "All questions have been answered!";
+                pickButton.disabled = true;
+                skipButton.disabled = true;
+                return;
+            }
+
+            const index = Math.floor(Math.random() * remainingQuestions.length);
+            const question = remainingQuestions[index];
+            remainingQuestions.splice(index, 1);
+
+            card.textContent = question;
+            pickedCount++;
+            updateCounter();
+        }
+
+        pickButton.addEventListener('click', pickQuestion);
+
+        skipButton.addEventListener('click', () => {
+            if (remainingQuestions.length > 0) {
+                pickQuestion();
+            }
+        });
+
+        updateCounter();
+    </script>
+</body>
+</html>
